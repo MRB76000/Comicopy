@@ -21,7 +21,9 @@ elif intro == "p":
     fake = {
         keyword: seriesLink
     }
-    database = open("db.json", 'w').write("\n" + json.dumps(fake))
+    z = open("db.json").read()
+    open("db.json", 'w').write(str(z).replace("}", ",\n") + json.dumps(fake).replace("{", ""))
+    
     
 
 
