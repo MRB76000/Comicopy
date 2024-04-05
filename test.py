@@ -1,15 +1,15 @@
 import sqlite3
-con = sqlite3.connect("tutorial.db")
+con = sqlite3.connect("demo.db")
 cur = con.cursor()
-# cur.execute("CREATE TABLE movie(title, year, score)")
+# cur.execute("CREATE TABLE comic(key, link, last page)")
 # cur.execute("""
-#             INSERT INTO movie VALUES
-#             ('Monty python and the holy grail', 1975, 8.2),('Iron Man', 2008, 10.0)""")
-con.commit()
-res = cur.execute("SELECT title FROM movie WHERE year = 2008")
+#             INSERT INTO comic VALUES
+#             ('USM', 'ultimate spiderman.com', 8),('Iron Man', 'im.com', 10)""")
+# con.commit()
+res = cur.execute("SELECT link FROM comic WHERE key = 'USM'")
 
 
-print(res.fetchone())
+print(str(res.fetchone()).replace('(','').replace(')', '').replace(',', '').replace('\'', '').replace(',', ''))
 
 con.commit() 
 con.close() 
