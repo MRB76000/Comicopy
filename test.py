@@ -6,10 +6,12 @@ cur = con.cursor()
 #             INSERT INTO comic VALUES
 #             ('USM', 'ultimate spiderman.com', 8),('Iron Man', 'im.com', 10)""")
 # con.commit()
-res = cur.execute("SELECT link FROM comic WHERE key = 'USM'")
+# res = cur.execute("SELECT link FROM comic WHERE key = 'USM'")
+
+cur.execute("DELETE FROM comic WHERE key = 'Iron Man'")
 
 
-print(str(res.fetchone()).replace('(','').replace(')', '').replace(',', '').replace('\'', '').replace(',', ''))
+# print(str(res.fetchone()).replace('(','').replace(')', '').replace(',', '').replace('\'', '').replace(',', ''))
 
 con.commit() 
 con.close() 
