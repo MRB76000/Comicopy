@@ -5,8 +5,16 @@ import os
 import time
 import sqlite3
 
+
+
 def home():
-    return "lol"
+    print("Work on this later")
+
+
+
+    
+
+
 
 #establish db
 con = sqlite3.connect("library.db")
@@ -37,12 +45,42 @@ def error(message, current):
 def uploader():
     seriesLink = input("\nPlease paste the link of the comic series:\n")
     keyword = input("\nWhat would you like the keyword for this Series to be?\n")
-    if cursor.execute("SELECT * FROM comic WHERE key = \'" + keyword + "\' OR link = \'" + seriesLink + "\'").fetchall() != []:
+    if cursor.execute("SELECT * FROM comic WHERE key = \'" + keyword.lower() + "\' OR link = \'" + seriesLink + "\'").fetchall() != []:
         error("\nIt seems like that keyword or link is already in your library, maybe try again? \nx: Exit Program\nr: Restart Task\nh: Go Home\n\n", uploader)
     else:
-        better = str("INSERT INTO comic VALUES(\'{}\', \'{}\', 8)")
-        cursor.execute(better.format(keyword, seriesLink))
-        con.commit()
+        i = 0
+        while i == 0:
+            filling = input("\nIs it a FULL comic series?\nPlease enter y/n: ")
+            if filling.lower() != 'y' and filling.lower() != 'n':
+                print("\nI said to press y or n, can you read? Lets try again...")
+            else:
+                i = i + 1
+
+        if filling.lower() == 'n':
+            better = str("INSERT INTO comic VALUES(\'{}\', \'{}\', 0)")
+            cursor.execute(better.format(keyword.lower(), seriesLink.replace("https://readcomiconline.li/Comic/", '')))
+            con.commit()
+        
+        else:
+            print("\nSince you are just uploading one file to the library, let's just download it right away!")
+
+
+
+
+def downloader():
+    akey = input("\nWhat is the Key for the comic you'd like to access? Or press h for help\n")
+    if akey == 'h':
+        home()#add list of all keys
+    elif akey == 'x':
+        None
+    elif cursor.execute("SELECT * FROM comic WHERE key = \'" + akey.lower() + "\'").fetchall() == []:
+        error("\nIt seems like that keyword isn't registered in your library, maybe try again? \nx: Exit Program\nr: Restart Task\nh: Go Home\n\n", downloader)
+    else:
+        #downloadystuff)
+        None
+
+
+
 
 
 
@@ -58,7 +96,7 @@ elif intro == "p":
      uploader()
 
 elif intro == "r":
-    end = input("\nPlease enter the key of the comic you would like to remove from your library, enter h to go home, or x to exit this program")
+    end = input("\nPlease enter the key of the comic you would like to remove from your library, enter h to go home, or x to exit this program:\n")
     if end == "h":
         home()
     elif end == "x":
@@ -66,7 +104,7 @@ elif intro == "r":
     else:
         cursor.execute("DELETE FROM comic WHERE key = \'" + end + "\'")
         con.commit()
-        error("\nSuccesfully deleted " + end + ", if it even existed in the first place..\nr/h: home\nx: exit program ")
+        error("\nSuccesfully deleted " + end + ", if it even existed in the first place..\nr/h: home\nx: exit program ", home)
 
 
 
