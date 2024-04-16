@@ -19,5 +19,32 @@
 
 
 
-balls = "real"
-print(balls.replace("hweqiowqh",''))
+# balls = "real"
+# print(balls.replace("hweqiowqh",''))
+
+
+import requests
+from bs4 import BeautifulSoup
+from requests_html import HTMLSession
+
+
+
+
+
+
+session = HTMLSession()
+r = session.get('https://comiconlinefree.me/invincible/issue-1/full')
+
+r.html.render()
+
+
+print(r.html.html)
+# soup = BeautifulSoup(r.html.html, 'html.parser')
+
+
+# rally = soup.find_all('img')
+
+# print(rally)
+
+
+

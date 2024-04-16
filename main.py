@@ -1,17 +1,28 @@
 from bs4 import BeautifulSoup
 import urllib.request
 import shutil
+import requests
 import os
 import time
 import sqlite3
 
 
-
 def home():
     print("Work on this later")
 
-
-
+def extractor(key, number):
+        try: os.makedirs(r'C:\Comics\\' + key)
+        except:
+            None
+        finally:
+            i = 1
+            url = requests.get('https://comiconlinefree.me/comic/' + str(key)).text
+            soup = BeautifulSoup(url, 'html.parser')
+            print(soup.prettify())
+            
+            
+        
+        
     
 
 
@@ -38,10 +49,6 @@ def error(message, current):
         error("\nYou did not provide a valid input, please press r, h or x\n\n", current=current)
 
 
-
-    
-
-
 def uploader():
     seriesLink = input("\nPlease paste the link of the comic series:\n")
     keyword = input("\nWhat would you like the keyword for this Series to be?\n")
@@ -58,7 +65,7 @@ def uploader():
 
         if filling.lower() == 'n':
             better = str("INSERT INTO comic VALUES(\'{}\', \'{}\', 0)")
-            cursor.execute(better.format(keyword.lower(), seriesLink.replace("https://readcomiconline.li/Comic/", '')))
+            cursor.execute(better.format(keyword.lower(), seriesLink.replace("https://comiconlinefree.me/comic/", '')))
             con.commit()
         
         else:
@@ -76,8 +83,9 @@ def downloader():
     elif cursor.execute("SELECT * FROM comic WHERE key = \'" + akey.lower() + "\'").fetchall() == []:
         error("\nIt seems like that keyword isn't registered in your library, maybe try again? \nx: Exit Program\nr: Restart Task\nh: Go Home\n\n", downloader)
     else:
-        #downloadystuff)
-        None
+        amt = int(input("How many issues would you like to download?"))
+        extractor(akey, 1)
+         
 
 
 
@@ -89,8 +97,7 @@ def downloader():
 intro = str(input("Welcome to Comicopy!! What would you like to do? \n \nd: download comics\np: post comic title to database\nr: remove a comic from library\n\n"))
 
 if intro == "d":
-    #comic downloader
-    title = input("What is the Keyword of the Comic you'd like to download?") #add a "press h for help" to display all keys
+    downloader()
 
 elif intro == "p":
      uploader()
