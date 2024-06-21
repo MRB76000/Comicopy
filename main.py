@@ -11,14 +11,15 @@ def home():
     print("Work on this later")
 
 def extractor(key, number):
-        try: os.makedirs(r'C:\Comics\\' + key)
+        try: os.makedirs(r'/home/mason/comics/' + key)
         except:
             None
         finally:
             i = 1
-            url = requests.get('https://comiconlinefree.me/comic/' + str(key)).text
+            url = requests.get('https://comiconlinefree.me/' + str(key) + "/issue-" + str(number) + "/full").text
             soup = BeautifulSoup(url, 'html.parser')
-            print(soup.prettify())
+            
+            
             
             
         
@@ -80,15 +81,17 @@ def downloader():
         home()#add list of all keys
     elif akey == 'x':
         None
-    elif cursor.execute("SELECT * FROM comic WHERE key = \'" + akey.lower() + "\'").fetchall() == []:
+    elif cursor.execute("SELECT * FROM comic WHERE key = \'" + akey + "\'").fetchall() == []:
         error("\nIt seems like that keyword isn't registered in your library, maybe try again? \nx: Exit Program\nr: Restart Task\nh: Go Home\n\n", downloader)
     else:
         amt = int(input("How many issues would you like to download?"))
-        extractor(akey, 1)
+        keyoto = cursor.execute("SELECT link FROM comic WHERE key = \'" + akey + "\'").fetchall() #link
+        numb = cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall() #las issue
+        nomper = len(str(keyoto)) #lenght of the link
+        new = str(keyoto)[3:nomper - 4]
+        extractor(new, 1)
+        
          
-
-
-
 
 
 
