@@ -11,13 +11,30 @@ def home():
     print("Work on this later")
 
 def extractor(key, number):
-        try: os.makedirs(r'/home/mason/comics/' + key)
+        dirName = r'/home/mason/comics/' + key
+        try: os.makedirs(dirName)
         except:
             None
         finally:
             i = 1
             url = requests.get('https://comiconlinefree.me/' + str(key) + "/issue-" + str(number) + "/full").text
             soup = BeautifulSoup(url, 'html.parser')
+
+
+
+            #this was copied
+
+            for page in soup.find_all("img", {"class": "lazyload chapter_img"}):
+                start = (str(page).index("https"))
+                end = (str(page).index(".jpg"))
+                number = str(page)[end - 2:end]
+                urllib.request.urlretrieve(str(page)[start:end] + ".jpg", "page " + number + ".jpg")
+                shutil.move("C:\VsCode projects\Spidey\page " + number + ".jpg", dirName)
+
+
+
+
+
             
             
             
