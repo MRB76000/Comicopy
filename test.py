@@ -78,9 +78,9 @@ import time
 # urllib.request.urlretrieve("https://2.bp.blogspot.com/-duVlikrjQM0/VnkHCAYI-SI/AAAAAAAADbE/Uipvnewo3P8/s0-Ic42/RCO001.jpg", "page" + "5" + ".jpg")
 
 
-key = "the-boys"
+
 pages = []
-issue = 1
+issue = number
 dirName = r'/home/mason/comics/' + key
 os.makedirs(r'/home/mason/comics/junk')
 
