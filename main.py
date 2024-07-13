@@ -9,6 +9,7 @@ import sqlite3
 from PIL import Image
 
 
+
 def home():
     print("Work on this later")
 
@@ -21,6 +22,8 @@ def extractor(key, number):
     except:
         None
     finally:
+        
+
         i = 1
         url = requests.get('https://comiconlinefree.me/' + str(key) + "/issue-" + str(issue) + "/full").text
         soup = BeautifulSoup(url, 'html.parser')
@@ -103,10 +106,15 @@ def downloader():
     else:
         amt = int(input("How many issues would you like to download?"))
         keyoto = cursor.execute("SELECT link FROM comic WHERE key = \'" + akey + "\'").fetchall() #link
-        numb = cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall() #las issue
+        numb = str(cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall()).replace('[(','').replace(',)]', '')
+        print(numb)
         nomper = len(str(keyoto)) #lenght of the link
         new = str(keyoto)[3:nomper - 4]
-        extractor(new, 1)
+        for k in range(amt):
+            extractor(new, int(k) + 1 + int(numb))
+        cursor.execute(f"UPDATE comic SET lastIssue = {int(numb) + amt} WHERE key = \'moon1980\'")
+        #cursor.execute('''UPDATE EMPLOYEE SET INCOME = 5000 WHERE Age<25;''') 
+        
 
 intro = str(input("Welcome to Comicopy!! What would you like to do? \n \nd: download comics\np: post comic title to database\nr: remove a comic from library\n\n"))
 if intro == "d":
