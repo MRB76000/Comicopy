@@ -32,49 +32,6 @@ def extractor(key, number):
 
 
 #establish db
-    pages = []
-    issue = number
-    dirName = r'/home/mason/comics/' + key
-    os.makedirs(r'/home/mason/comics/junk')
-    try: os.makedirs(dirName)
-    except:
-        None
-    finally:
-        
-
-        i = 1
-        url = requests.get('https://comiconlinefree.me/' + str(key) + "/issue-" + str(issue) + "/full").text
-        soup = BeautifulSoup(url, 'html.parser')
-        for page in soup.find_all("img", {"class": "lazyload chapter_img"}):
-            start = (str(page).index("https"))
-            end = (str(page).find("\"", start + 1))
-            number = str(page).index("Page ")
-            try:
-                int(str(page)[number + 6]) / 2
-                second = str(page)[number + 6]
-                try:
-                    int(str(page)[number + 7]) / 2
-                    third = str(page)[number + 7]
-                    pn = str(page)[number + 5] + second + third
-                except:
-                    pn = str(page)[number + 5] + second 
-            except:
-                pn = str(page)[number + 5]
-            pages.append("page " + pn + ".jpg")
-            imageLink = str(page)[start:end] 
-            urllib.request.urlretrieve(imageLink, "page " + pn + ".jpg")
-            shutil.move("/home/mason/vscode projects/Python-Comic-Downloader/page " + pn + ".jpg", "/home/mason/comics/junk")
-            print(pn)
-        images = [
-            Image.open("/home/mason/comics/junk" +'/' + f)
-            for f in pages]
-        pdf_path = dirName + '/issue ' + str(issue) + ".pdf"
-        images[0].save(
-            pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:])
-        path = os.path.join("/home/mason/comics/", "junk") #might draw an eror for /
-        shutil.rmtree(path)
-
-
 con = sqlite3.connect("library.db")
 cursor = con.cursor()
 try:
@@ -109,6 +66,7 @@ def uploader():
                 print("\nI said to press y or n, can you read? Lets try again...")
             else:
                 i = i + 1
+
         if filling.lower() == 'n':
             better = str("INSERT INTO comic VALUES(\'{}\', \'{}\', 0)")
             cursor.execute(better.format(keyword.lower(), seriesLink.replace("https://comiconlinefree.me/comic/", '')))
@@ -152,22 +110,6 @@ if intro == "d":
 elif intro == "p":
      uploader()
 
-        keyoto = cursor.execute("SELECT link FROM comic WHERE key = \'" + akey + "\'").fetchall() #link
-        numb = str(cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall()).replace('[(','').replace(',)]', '')
-        print(numb)
-        nomper = len(str(keyoto)) #lenght of the link
-        new = str(keyoto)[3:nomper - 4]
-        for k in range(amt):
-            extractor(new, int(k) + 1 + int(numb))
-        cursor.execute(f"UPDATE comic SET lastIssue = {int(numb) + amt} WHERE key = \'moon1980\'")
-        #cursor.execute('''UPDATE EMPLOYEE SET INCOME = 5000 WHERE Age<25;''') 
-        
-
-intro = str(input("Welcome to Comicopy!! What would you like to do? \n \nd: download comics\np: post comic title to database\nr: remove a comic from library\n\n"))
-if intro == "d":
-    downloader()
-elif intro == "p":
-     uploader()
 elif intro == "r":
     end = input("\nPlease enter the key of the comic you would like to remove from your library, enter h to go home, or x to exit this program:\n")
     if end == "h":
