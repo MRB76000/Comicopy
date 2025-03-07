@@ -30,15 +30,18 @@ from requests_html import HTMLSession
 
 
 
+url = requests.get("https://comiconlinefree.me/moon-knight-1980/issue-1/full")
+
+print(url.text)
 
 
-session = HTMLSession()
-r = session.get('https://comiconlinefree.me/invincible/issue-1/full')
+# session = HTMLSession()
+# r = session.get('https://comiconlinefree.me/moon-knight-1980/issue-1')
 
-r.html.render()
+# r.html.render()
 
 
-print(r.html.html)
+# print(r.html.html)
 # soup = BeautifulSoup(r.html.html, 'html.parser')
 
 
