@@ -23,11 +23,9 @@
 # print(balls.replace("hweqiowqh",''))
 
 
-<<<<<<< HEAD
 import requests
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-=======
 
 
 
@@ -130,16 +128,13 @@ finally:
         urllib.request.urlretrieve(imageLink, "page " + pn + ".jpg")
         shutil.move("/home/mason/vscode projects/Python-Comic-Downloader/page " + pn + ".jpg", "/home/mason/comics/junk")
         print(pn)
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 
 
 
 
-<<<<<<< HEAD
 url = requests.get("https://comiconlinefree.me/moon-knight-1980/issue-1/full")
 
 print(url.text)
-=======
     images = [
         Image.open("/home/mason/comics/junk" +'/' + f)
         for f in pages
@@ -196,7 +191,6 @@ print(url.text)
 # url = requests.get("https://comiconlinefree.me/moon-knight-1980/issue-1/full")
 
 # print(url.text)
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 
 
 # session = HTMLSession()

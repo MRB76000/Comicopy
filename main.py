@@ -5,21 +5,13 @@ import requests
 import os
 import time
 import sqlite3
-<<<<<<< HEAD
 
 from file_getter import pop
-=======
-#github sucks
-from PIL import Image
-
-
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 
 def home():
     print("Work on this later")
 
 def extractor(key, number):
-<<<<<<< HEAD
         try: os.makedirs(r'C:\Comics\\' + key)
         except:
             None
@@ -40,7 +32,6 @@ def extractor(key, number):
 
 
 #establish db
-=======
     pages = []
     issue = number
     dirName = r'/home/mason/comics/' + key
@@ -84,21 +75,15 @@ def extractor(key, number):
         shutil.rmtree(path)
 
 
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 con = sqlite3.connect("library.db")
 cursor = con.cursor()
 try:
     cursor.execute("CREATE TABLE comic(key, link, lastIssue)")
     con.commit()
-<<<<<<< HEAD
 
 except:
     con.commit()
 
-=======
-except:
-    con.commit()
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 def error(message, current):
     ans = input(message)
     if ans.lower() == 'r':
@@ -109,11 +94,8 @@ def error(message, current):
         None
     else:
         error("\nYou did not provide a valid input, please press r, h or x\n\n", current=current)
-<<<<<<< HEAD
 
 
-=======
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 def uploader():
     seriesLink = input("\nPlease paste the link of the comic series:\n")
     keyword = input("\nWhat would you like the keyword for this Series to be?\n")
@@ -127,27 +109,17 @@ def uploader():
                 print("\nI said to press y or n, can you read? Lets try again...")
             else:
                 i = i + 1
-<<<<<<< HEAD
-
-=======
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
         if filling.lower() == 'n':
             better = str("INSERT INTO comic VALUES(\'{}\', \'{}\', 0)")
             cursor.execute(better.format(keyword.lower(), seriesLink.replace("https://comiconlinefree.me/comic/", '')))
             con.commit()
-<<<<<<< HEAD
         
-=======
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
         else:
             print("\nSince you are just uploading one file to the library, let's just download it right away!")
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 def downloader():
     akey = input("\nWhat is the Key for the comic you'd like to access? Or press h for help\n")
     if akey == 'h':
@@ -158,7 +130,6 @@ def downloader():
         error("\nIt seems like that keyword isn't registered in your library, maybe try again? \nx: Exit Program\nr: Restart Task\nh: Go Home\n\n", downloader)
     else:
         amt = int(input("How many issues would you like to download?"))
-<<<<<<< HEAD
         keyoto = cursor.execute("SELECT link FROM comic WHERE key = \'" + akey + "\'").fetchall()
         numb = cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall()
         nomper = len(str(keyoto))
@@ -181,7 +152,6 @@ if intro == "d":
 elif intro == "p":
      uploader()
 
-=======
         keyoto = cursor.execute("SELECT link FROM comic WHERE key = \'" + akey + "\'").fetchall() #link
         numb = str(cursor.execute("SELECT lastIssue FROM comic WHERE key = \'" + akey + "\'").fetchall()).replace('[(','').replace(',)]', '')
         print(numb)
@@ -198,7 +168,6 @@ if intro == "d":
     downloader()
 elif intro == "p":
      uploader()
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 elif intro == "r":
     end = input("\nPlease enter the key of the comic you would like to remove from your library, enter h to go home, or x to exit this program:\n")
     if end == "h":
@@ -209,7 +178,6 @@ elif intro == "r":
         cursor.execute("DELETE FROM comic WHERE key = \'" + end + "\'")
         con.commit()
         error("\nSuccesfully deleted " + end + ", if it even existed in the first place..\nr/h: home\nx: exit program ", home)
-<<<<<<< HEAD
 
 
 
@@ -217,7 +185,5 @@ elif intro == "r":
     
 
 
-=======
->>>>>>> b45bcae0282b652e2ebdad16a8501d17342c4c47
 con.commit()
 con.close() 
